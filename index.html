@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Selzen Scanner</title>
+    <meta name="description" content="Application de suivi de la consommation de sel - Simplifiez votre quotidien avec une application moderne et fonctionnelle." />
+    <meta name="theme-color" content="#2B4C7E" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/lovable-uploads/760c7a0b-30b1-4ea8-9d3f-4f5fd6addc15.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/lovable-uploads/760c7a0b-30b1-4ea8-9d3f-4f5fd6addc15.png" />
+    
+    <!-- PWA optimizations -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Selzen" />
+    <link rel="apple-touch-icon" href="/lovable-uploads/760c7a0b-30b1-4ea8-9d3f-4f5fd6addc15.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Selzen Scanner" />
+    <meta name="msapplication-TileColor" content="#2B4C7E" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Security headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: https:; img-src 'self' data: https:; connect-src 'self' https:;" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/lovable-uploads/fc9564a5-f01f-4e99-a34c-4fc3cbc27d72.png" as="image" />
+    <link rel="preload" href="/assets/index.css" as="style" />
+    <link rel="preload" href="/assets/index.js" as="script" />
+    
+    <style>
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #2B4C7E;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
+      #splash-screen img {
+        width: auto;
+        height: auto;
+        max-width: 60%;
+        max-height: 60%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash-screen">
+      <img src="/lovable-uploads/fc9564a5-f01f-4e99-a34c-4fc3cbc27d72.png" alt="Selzen Loading" />
+    </div>
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(registration => {
+              console.log('Service Worker registered successfully:', registration);
+            })
+            .catch(error => {
+              console.log('Service Worker registration failed:', error);
+            });
+        });
+      }
+
+      // Optimisation du splash screen
+      window.addEventListener('load', function() {
+        requestAnimationFrame(() => {
+          const splash = document.getElementById('splash-screen');
+          if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => {
+              splash.style.display = 'none';
+              splash.remove(); // Libère la mémoire
+            }, 300);
+          }
+        });
+      });
+    </script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
